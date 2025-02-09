@@ -1,0 +1,135 @@
+.looksNew {
+    background-image: url("https://static-assets-web.flixcart.com/fk-p-linchpin-web/fk-cp-zion/img/login_img_c4a81e.png");
+    background-position: center 85%;
+    background-repeat: no-repeat;
+}
+
+.sign {
+    color: rgb(202, 197, 197);
+}
+
+.col {
+    background-color: rgb(236, 231, 231);
+}
+
+.inpSign {
+    border-left: none;
+    border-right: none;
+    border-top: none;
+}
+
+.borderNone:focus {
+    border-top: none !important;
+    border-left: none !important;
+    border-right: none !important;
+    outline: none;
+}
+
+.borderRad {
+    border-radius: 0.2rem;
+    background-color: rgb(236, 123, 82);
+    color: white;
+    border: none;
+    height: 2.3rem;
+}
+
+.SignUpP {
+    cursor: pointer;
+}
+
+.cartImg {
+    max-width: 2rem;
+    height: auto;
+    display: block;
+}
+
+.cart-container {
+    position: relative;
+    display: inline-block;
+}
+
+.count-text {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: red;
+    color: white;
+    width: 1rem;
+    height: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    font-size: 1rem;
+}
+
+.valBtn {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.imgHover:hover {
+    transform: scale(1.2);
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
+}
+
+.eachImgSi {
+    width: 10rem;
+    height: 10rem;
+}
+
+.eachImgSi:hover {
+    transform: scale(1.1);
+    transition: transform 0.3s ease-in-out;
+    cursor: pointer;
+}
+.parentDiv {
+    min-height: 100vh;
+    display: flex;
+}
+
+.colCategory {
+    background-color: rgb(243, 239, 239);
+    border-radius: 1rem;
+    width: 17rem;
+    height: 17rem;
+    overflow: hidden;
+}
+
+.colCategory img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.eachCatContainer {
+    background-color: rgb(243, 239, 239);
+    border-top-left-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+    width: 20rem;
+    height: 20rem;
+    overflow: hidden;
+}
+
+.eachCatContainer img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.eachCatDetails {
+    background-color: rgb(245, 241, 241);
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    width: 20rem;
+    height: 20rem;
+    overflow: hidden;
+}
+
+.eachCatDetails div {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
