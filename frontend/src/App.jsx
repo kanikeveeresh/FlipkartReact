@@ -1,6 +1,7 @@
 import './App.css'
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import SignUp from './SignUp'
+import "tailwindcss";
 import Login from './LogIn'
 import SubCategory from './subCategory.jsx'
 import HomePage from './HomePage.jsx'

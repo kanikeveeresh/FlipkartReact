@@ -1,5 +1,6 @@
 import React from "react";
 import categoryData from "./components/data/catData.js";
+import Footer from "./components/Foot/footer.jsx";
 import { useParams, useNavigate } from "react-router-dom";
 import Head from './components/top/Head.jsx'
 import './components/styles/frontendSt.css'
@@ -34,6 +35,7 @@ function subCategory() {
                     </div>
                 ))}
             </div>
+            <Footer />
         </>
     )
 }

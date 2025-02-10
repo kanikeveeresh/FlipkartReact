@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useParams, useLocation } from 'react-router-dom'
 import Head from './components/top/Head'
+import Footer from './components/Foot/footer'
 import './components/styles/frontendSt.css'
 
 function eachCat() {
@@ -48,6 +49,7 @@ function eachCat() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   )
 }

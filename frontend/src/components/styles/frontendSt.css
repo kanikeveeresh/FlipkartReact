@@ -1,7 +1,12 @@
+@import "tailwindcss";
 .looksNew {
     background-image: url("https://static-assets-web.flixcart.com/fk-p-linchpin-web/fk-cp-zion/img/login_img_c4a81e.png");
     background-position: center 85%;
     background-repeat: no-repeat;
+}
+
+.vh-50 {
+    height: 50vh;
 }
 
 .sign {
@@ -16,12 +21,14 @@
     border-left: none;
     border-right: none;
     border-top: none;
+    border-bottom: 2px solid black;
 }
 
 .borderNone:focus {
     border-top: none !important;
     border-left: none !important;
     border-right: none !important;
+    border-bottom: 2px solid black !important;
     outline: none;
 }
 

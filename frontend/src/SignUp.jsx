@@ -1,5 +1,7 @@
 import React, {useState} from 'react'
 import LooksNew from './LooksNew'
+import Head from './components/top/Head';
+import Footer from './components/Foot/footer';
 import emailjs from "emailjs-com";
 import bcrypt from "bcryptjs";
 import axios from "axios"
@@ -12,6 +14,7 @@ function SignUp() {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
+  const [alreadyExist, setAlreadyExist] = useState('');
   const [password, setPassword] = useState('');
   const [rePassword, setRePassword] = useState('');
   const [otpSent, setOtpSent] = useState(false);
@@ -30,7 +33,7 @@ function SignUp() {
 
   const handleReq = async () => {
     if(!email) {
-      setMessage("Email required.");
+      setAlreadyExist("Email required.");
       return;
     }
     
@@ -46,7 +49,7 @@ function SignUp() {
       );
 
       if(res.data.message == "exists") {
-        setCreMsg("Email already exists. Please login.");
+        setAlreadyExist("Email already exists. Please login.");
       }
 
       else {
@@ -124,29 +127,34 @@ function SignUp() {
     navigate('/login')
   }
   return (
-    <div className='d-flex justify-content-center py-4 vh-100 gap-2 col'>
-        <LooksNew />
-      <div className='bg-white w-25 py-5 px-4'>
-        <input type="text" placeholder='Enter Email' className='w-100 inpSign borderNone mb-3' value={email} onChange={(e) => setEmail(e.target.value)} required disabled={otpSent}/>
-        <button className='w-100  otpSended borderRad mb-3' onClick={handleReq} disabled={otpSent}>Request OTP</button>
-        {otpSent && (
-          <div className='valBtn'>
-            <input type="text" placeholder='Enter OTP' className='mb-3 inpSign borderNone w-75' value={otp} onChange={(e) => setOtp(e.target.value)} disabled={validated}/>
-            <button className='w-25 borderRad' onClick={handleVal} disabled={validated}>Validate</button>
-          </div>
-        ) }
-        {message && <p className="text-success text-center">{message}</p>}
-        {validated && (
-          <>
-            <input type="password" placeholder='Enter Password' className='w-100 inpSign borderNone mb-3' value={password} onChange={(e) => setPassword(e.target.value)} required/>
-            <input type="password" placeholder='Re-enter Password' className='w-100 inpSign borderNone mb-3' value={rePassword} onChange={(e) => setRePassword(e.target.value)} required/>
-            <button className='w-100 borderRad mb-3' onClick={handleCreate}>Create an Account</button>
-          </>
-        )}
-        {cremsg && <p className='text-danger text-center'>{cremsg}</p>}
-        <p className='d-flex justify-content-center text-primary SignUpP' onClick={HandleLog}>Existing User? Log in</p>
+    <>
+      <Head />
+      <div className='d-flex justify-content-center pt-5 py-4 vh-100 gap-2 col'>
+          <LooksNew />
+        <div className='bg-white w-25 py-5 px-4'>
+          <input type="text" placeholder='Enter Email' className='w-100 inpSign borderNone mb-3' value={email} onChange={(e) => setEmail(e.target.value)} required disabled={otpSent}/>
+          <button className='w-100  otpSended borderRad mb-3' onClick={handleReq} disabled={otpSent}>Request OTP</button>
+          {otpSent && (
+            <div className='valBtn'>
+              <input type="text" placeholder='Enter OTP' className='mb-3 inpSign borderNone w-75' value={otp} onChange={(e) => setOtp(e.target.value)} disabled={validated}/>
+              <button className='w-25 borderRad' onClick={handleVal} disabled={validated}>Validate</button>
+            </div>
+          ) }
+          {!otpSent && <p className='text-danger text-center'>{alreadyExist}</p>}
+          {message && <p className="text-success text-center">{message}</p>}
+          {validated && (
+            <>
+              <input type="password" placeholder='Enter Password' className='w-100 inpSign borderNone mb-3' value={password} onChange={(e) => setPassword(e.target.value)} required/>
+              <input type="password" placeholder='Re-enter Password' className='w-100 inpSign borderNone mb-3' value={rePassword} onChange={(e) => setRePassword(e.target.value)} required/>
+              <button className='w-100 borderRad mb-3' onClick={handleCreate}>Create an Account</button>
+            </>
+          )}
+          {cremsg && <p className='text-danger text-center'>{cremsg}</p>}
+          <p className='d-flex justify-content-center text-primary SignUpP' onClick={HandleLog}>Existing User? Log in</p>
+        </div>
       </div>
-    </div>
+      <Footer />
+    </>
   )
 }
 

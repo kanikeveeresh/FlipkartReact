@@ -11,7 +11,7 @@ function catagories() {
   }
 
   return (
-    <div className='pt-5 d-flex justify-content-evenly align-items-center'>
+    <div className='pt-5 d-flex justify-content-evenly align-items-center vh-50'>
       {categoryData.map((item, index) => (
         <div key={index} className='d-flex flex-column justify-content-center align-items-center text-center'>
           <img src={item.src} className='imgHover' onClick={() => Opento(item.catagory)}/>
