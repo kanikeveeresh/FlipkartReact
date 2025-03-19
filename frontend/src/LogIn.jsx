@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Head from './components/top/Head';
 import Footer from './components/Foot/footer';
 import axios from 'axios';
@@ -10,6 +10,14 @@ function LogIn() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
+
+    useEffect(() => {
+      const token = localStorage.getItem("token");
+
+      if(!token) {
+        navigate('/login');
+      }
+    }, [navigate]);
 
     const HandleSign = () => {
         navigate('/');
@@ -34,6 +42,7 @@ function LogIn() {
           );
 
           if(response.status === 200) {
+            localStorage.setItem("token", response.data.token);
             navigate('/home');
           }
         }
@@ -46,7 +55,7 @@ function LogIn() {
               return setMessage("Incorrect Password. Please try again.");
             }
             else {
-              return setMessage("Failed to login.");
+              return setMessage("Failed to login.", err.message);
             }
           }
           else {

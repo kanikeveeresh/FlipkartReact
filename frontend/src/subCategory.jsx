@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import categoryData from "./components/data/catData.js";
 import Footer from "./components/Foot/footer.jsx";
 import { useParams, useNavigate } from "react-router-dom";
 import Head from './components/top/Head.jsx'
 import './components/styles/frontendSt.css'
+import axios from 'axios'
 
-function subCategory() {
+function subCategory({cartCount, setCartCount}) {
     const { categoryName } = useParams();
     const navigate = useNavigate();
     const category = categoryData.find((cat) => cat.catagory == categoryName);
@@ -17,6 +18,7 @@ function subCategory() {
     const eachCategory = (item) => {
         navigate(`/home/${category.catagory}/${item.title}`,{
             state: {
+                title: item.title,
                 description: item.description,
                 image: item.src,
                 price: item.price,
@@ -24,9 +26,23 @@ function subCategory() {
         });
     }
 
+    const GetCartCount = async () => {
+        try {
+        const response = await axios.get("http://localhost:5000/getCount");
+        setCartCount(() => response.data.count || 0);
+        }
+        catch(err) {
+        console.error("Server error", err);
+        }
+    }
+
+    useEffect(() => {
+        GetCartCount();
+    }, []);
+
     return (
         <>
-            <Head />
+            <Head cartCount={cartCount}/>
             <div className="d-flex justify-content-evenly align-items-center parentDiv">
                 {category.subCategory.map((item, index) => (
                     <div key={index} className="d-flex flex-column text-center border border-rounded-3 p-5 colCategory">

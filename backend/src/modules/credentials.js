@@ -9,4 +9,16 @@ const userSchema = mongoose.Schema(
 
 const User = mongoose.model("User", userSchema);
 
-module.exports = User;
+const itemsSchema = mongoose.Schema({
+    items: [
+        {
+            tag: String,
+            content: String,
+            _id: false
+        }
+    ]
+},{timeStamps: true, collection: 'cartItems'});
+
+const CartItems = mongoose.model("CartItems", itemsSchema);
+
+module.exports = { User, CartItems };

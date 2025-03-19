@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import LooksNew from './LooksNew'
 import Head from './components/top/Head';
 import Footer from './components/Foot/footer';
@@ -21,8 +21,16 @@ function SignUp() {
   const [generatedOtp, setGeneratedOtp] = useState('');
   const [otp, setOtp] = useState('');
   const [validated, setValidated] = useState(false);
-  const [message, setMessage] = useState('')
-  const [cremsg, setCreMsg] = useState('')
+  const [message, setMessage] = useState('');
+  const [cremsg, setCreMsg] = useState('');
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    if(token) {
+      navigate('/home');
+    }
+  }, [navigate]);
 
 
   const generateOtp = () => {
