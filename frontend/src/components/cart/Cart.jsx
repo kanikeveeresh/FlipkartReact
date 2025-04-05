@@ -5,32 +5,50 @@ import axios from 'axios';
 
 function Cart() {
   const [cartItems, setCartItems] = useState([]);
-  let imgSrc = '', title = '', description = '', price = '', count = '';
   const [msg, setMsg] = useState("");
-  const [cartcount, setCount] = useState(4);
+  const [quantities, setQuantities] = useState({});
 
-  const HandleDec = () => {
-    if(cartcount === 1) {
-      setMsg("Minimum limit reached!");
-      return;
-    }
-    setMsg("");
-    setCount((prev) => prev - 1);
+  const HandleDec = (id) => {
+    setQuantities((prevQuantities) => {
+      const newCount = (prevQuantities[id] || 1) - 1;
+      if(newCount < 1) {
+        setMsg((prev) => ({ ...prev, [id]: "Minimum limit reached!"}));
+        return prevQuantities;
+      }
+      setMsg((prev) => ({ ...prev, [id]: ""}));
+      return { ...prevQuantities, [id]: newCount};
+    })
   }
 
-  const HandleInc = () => {
-    if(cartcount === 10) {
-      setMsg("Maximum limit reached!");
-      return;
-    }
-    setMsg("");
-    setCount((prev) => prev + 1);
+  const HandleInc = (id) => {
+    setQuantities((prevQuantities) => {
+      const newCount = (prevQuantities[id] || 1) + 1;
+      console.log(newCount);
+      if(newCount > 10) {
+        setMsg((prev) => ({ ...prev, [id]: "Maximum limit reached!"}));
+        return prevQuantities;
+      }
+      setMsg((prev) => ({ ...prev, [id]: ""}));
+      return { ...prevQuantities, [id]: newCount};
+    })
   }
 
   const fetchData = async() => {
     try{
       const response = await axios.get("http://localhost:5000/getItems");
       setCartItems(response.data);
+
+      const initialQuantity = {};
+      response.data.forEach((doc) => {
+        doc.items.map((element, index) => {
+          if(element.tag.toLowerCase() === 'strong') {
+            const uniqueId = doc._id;
+            initialQuantity[uniqueId] = parseInt(element.content);
+          }
+        });
+      });
+
+      setQuantities(initialQuantity);
     }
     catch(err) {
       console.error("Error fetching data", err);
@@ -47,38 +65,34 @@ function Cart() {
       {cartItems.length > 0 ? (
         <div className='d-flex p-3 gap-3 cartBackGround mt-5'>
           <div className='cartItems p-3' style={{flexBasis:'65%'}}>
-            <div className='d-flex'>
-            {cartItems.map(doc => (
-              <div key={doc._id}>
+            <div className='d-flex flex-column'>
+            {cartItems.map((doc, index) => (
+              <>
+              <div key={index} className='d-flex'>
                 {doc.items.map((element, index) => {
-                  if(element.tag === 'img') {
-                    imgSrc = element.content;
-                  }
-                  else if(element.tag === 'h2') {
-                    title = element.content;
-                  }
-                  else if(element.tag === 'p') {
-                    description = element.content;
-                  }
-                  else if(element.tag === 'span') {
-                    price = element.content;
+                  const uniqueId = doc._id;
+                  if(element.tag.toLowerCase() === 'img') {
+                    return (<div key={uniqueId}>
+                      <img src={element.content} className='CartImg'/>
+                      <div className='d-flex justify-content-center align-items-center'><button className={`btn btn-${quantities[uniqueId] > 1 ? 'success' : 'danger'}`} onClick={() => HandleDec(uniqueId)}>-</button><span><strong>{quantities[uniqueId] || 1}</strong></span><button className={`btn btn-${quantities[uniqueId] == 10 ? 'danger' : 'success'}`} onClick={() => HandleInc(uniqueId)}>+</button></div>
+                      {msg[uniqueId] && <p className='text-danger text-center' style={{fontSize: '10px'}}>{msg[uniqueId]}</p>}
+                    </div>
+                    )
                   }
                   else {
-                    count = element.content;
+                    return (
+                      <div key={uniqueId} className='d-flex flex-column align-items-start'>
+                        {element.tag.toLowerCase() === 'h2' && <><h2>{element.content}</h2></>}
+                        {element.tag.toLowerCase() === 'p' && <p>{element.content}</p>}
+                        {element.tag.toLowerCase() === 'span' && <h4>₹{element.content}</h4>}
+                      </div>
+                    )
                   }
                 })}
               </div>
+              <hr ></hr>
+              </>
             ))}
-              <div>
-                <img src={imgSrc} /><br />
-                <div className='align-content-center'><button className={`btn btn-${cartcount > 1 ? 'success' : 'danger'}`} onClick={HandleDec}>-</button><span><strong className='Itemstoget'>{cartcount}</strong></span><button className={`btn btn-${cartcount == 10 ? 'danger' : 'success'}`} onClick={HandleInc}>+</button></div>
-                {msg && <p className='text-danger text-center'>{msg}</p>}
-              </div>
-              <div>
-                <h3>{title}</h3>
-                <p>{description}</p>
-                <p>{price}</p>
-              </div>
             </div>
           </div>
           <div className='position-relative' style={{flexBasis:'35%'}}>

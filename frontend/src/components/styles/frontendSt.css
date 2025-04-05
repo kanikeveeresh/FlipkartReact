@@ -153,3 +153,10 @@
     height: fit-content;
     width: 34%;
 }
+
+.CartImg {
+    width: 125px;
+    height: 125px;
+    object-fit: contain;
+    margin-bottom: 1rem;
+}
