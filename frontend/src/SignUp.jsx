@@ -79,6 +79,7 @@ function SignUp() {
     }
     catch (error) {
       console.error("Failed to send OTP:", error);
+      setMessage(error);
     }
   }
   
