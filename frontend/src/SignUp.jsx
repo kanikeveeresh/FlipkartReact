@@ -23,6 +23,7 @@ function SignUp() {
   const [validated, setValidated] = useState(false);
   const [message, setMessage] = useState('');
   const [cremsg, setCreMsg] = useState('');
+  const baseURL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -47,7 +48,7 @@ function SignUp() {
     
 
     try {
-      const res = await axios.post("http://localhost:5000/api/credentials/checkEmail", 
+      const res = await axios.post(`${baseURL}/api/credentials/checkEmail`, 
         {
           email,
         },
@@ -105,7 +106,7 @@ function SignUp() {
     }
 
     try {
-      const response = await axios.post("http://localhost:5000/api/credentials/save", {
+      const response = await axios.post(`${baseURL}/api/credentials/save`, {
         email,
         password: hashedPass,
       },

@@ -7,9 +7,11 @@ import axios from 'axios'
 
 function HomePage({cartCount, setCartCount}) {
 
+  const baseURL = import.meta.env.VITE_API_URL;
+
   const GetCartCount = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/getCount");
+      const response = await axios.get(`${baseURL}/getCount`);
       setCartCount(() => response.data.count || 0);
     }
     catch(err) {

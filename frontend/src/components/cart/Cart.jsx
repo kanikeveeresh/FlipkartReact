@@ -7,6 +7,7 @@ function Cart() {
   const [cartItems, setCartItems] = useState([]);
   const [msg, setMsg] = useState("");
   const [quantities, setQuantities] = useState({});
+  const baseURL = import.meta.env.VITE_API_URL;
 
   const HandleDec = (id) => {
     setQuantities((prevQuantities) => {
@@ -35,7 +36,7 @@ function Cart() {
 
   const fetchData = async() => {
     try{
-      const response = await axios.get("http://localhost:5000/getItems");
+      const response = await axios.get(`${baseURL}/getItems`);
       setCartItems(response.data);
 
       const initialQuantity = {};

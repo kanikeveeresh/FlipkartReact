@@ -10,6 +10,7 @@ function subCategory({cartCount, setCartCount}) {
     const { categoryName } = useParams();
     const navigate = useNavigate();
     const category = categoryData.find((cat) => cat.catagory == categoryName);
+    const baseURL = import.meta.env.VITE_API_URL;
 
     if(!category) {
         return <h2>Category not found.</h2>
@@ -28,7 +29,7 @@ function subCategory({cartCount, setCartCount}) {
 
     const GetCartCount = async () => {
         try {
-        const response = await axios.get("http://localhost:5000/getCount");
+        const response = await axios.get(`${baseURL}/getCount`);
         setCartCount(() => response.data.count || 0);
         }
         catch(err) {
