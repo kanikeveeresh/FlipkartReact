@@ -1,5 +1,5 @@
 const User = require("../modules/credentials.js");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
 const SECRET_KEY = process.env.SECRET_KEY || "f4b72dff3b4a8df6e6b6a16c7e0eaf7df10a6a19b2b229f4a3893f5292a9e589";
