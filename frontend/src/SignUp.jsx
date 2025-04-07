@@ -23,15 +23,14 @@ function SignUp() {
   const [validated, setValidated] = useState(false);
   const [message, setMessage] = useState('');
   const [cremsg, setCreMsg] = useState('');
-  const baseURL = import.meta.env.VITE_API_URL;
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
+  // useEffect(() => {
+  //   const token = localStorage.getItem("token");
 
-    if(token) {
-      navigate('/home');
-    }
-  }, [navigate]);
+  //   if(token) {
+  //     navigate('/home');
+  //   }
+  // }, [navigate]);
 
 
   const generateOtp = () => {
@@ -41,6 +40,7 @@ function SignUp() {
   }
 
   const handleReq = async () => {
+    console.log("Request OTP button clicked!");
     if(!email) {
       setAlreadyExist("Email required.");
       return;
@@ -48,7 +48,7 @@ function SignUp() {
     
 
     try {
-      const res = await axios.post(`${baseURL}/api/credentials/checkEmail`, 
+      const res = await axios.post(`http://localhost:5000/api/credentials/checkEmail`, 
         {
           email,
         },
@@ -107,7 +107,7 @@ function SignUp() {
     }
 
     try {
-      const response = await axios.post(`${baseURL}/api/credentials/save`, {
+      const response = await axios.post(`http://localhost:5000/api/credentials/save`, {
         email,
         password: hashedPass,
       },

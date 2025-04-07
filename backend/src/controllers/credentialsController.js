@@ -1,4 +1,4 @@
-const User = require("../modules/credentials.js");
+const { User } = require("../modules/credentials.js");
 
 const saveCred = async (req, res) => {
     try {

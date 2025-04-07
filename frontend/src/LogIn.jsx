@@ -10,7 +10,6 @@ function LogIn() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [message, setMessage] = useState("");
-    const baseURL = import.meta.env.VITE_API_URL;
 
     useEffect(() => {
       const token = localStorage.getItem("token");
@@ -32,7 +31,7 @@ function LogIn() {
         return setMessage("Password required.");
       }
         try {
-          const response = await axios.post(`${baseURL}/api/credentials/checkEmailandPass`, 
+          const response = await axios.post(`http://localhost:5000/api/credentials/checkEmailandPass`, 
             {
               email,
               password,
