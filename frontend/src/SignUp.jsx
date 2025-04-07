@@ -47,7 +47,7 @@ function SignUp() {
     
 
     try {
-      const res = await axios.post(`http://localhost:5000/api/credentials/checkEmail`, 
+      const res = await axios.post(`https://flipkartreact.onrender.com/api/credentials/checkEmail`, 
         {
           email,
         },
@@ -106,7 +106,7 @@ function SignUp() {
     }
 
     try {
-      const response = await axios.post(`http://localhost:5000/api/credentials/save`, {
+      const response = await axios.post(`https://flipkartreact.onrender.com/api/credentials/save`, {
         email,
         password: hashedPass,
       },
