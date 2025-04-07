@@ -40,7 +40,6 @@ function SignUp() {
   }
 
   const handleReq = async () => {
-    console.log("Request OTP button clicked!");
     if(!email) {
       setAlreadyExist("Email required.");
       return;
