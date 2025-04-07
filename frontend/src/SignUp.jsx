@@ -24,13 +24,13 @@ function SignUp() {
   const [message, setMessage] = useState('');
   const [cremsg, setCreMsg] = useState('');
 
-  // useEffect(() => {
-  //   const token = localStorage.getItem("token");
+  useEffect(() => {
+    const token = localStorage.getItem("token");
 
-  //   if(token) {
-  //     navigate('/home');
-  //   }
-  // }, [navigate]);
+    if(token) {
+      navigate('/home');
+    }
+  }, [navigate]);
 
 
   const generateOtp = () => {
