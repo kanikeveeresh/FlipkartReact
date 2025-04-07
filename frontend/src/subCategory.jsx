@@ -28,7 +28,7 @@ function subCategory({cartCount, setCartCount}) {
 
     const GetCartCount = async () => {
         try {
-        const response = await axios.get(`http://localhost:5000/getCount`);
+        const response = await axios.get(`https://flipkartreact.onrender.com/getCount`);
         setCartCount(() => response.data.count || 0);
         }
         catch(err) {
