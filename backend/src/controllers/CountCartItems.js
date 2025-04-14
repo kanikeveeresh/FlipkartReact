@@ -1,8 +1,10 @@
 const { CartItems } = require("../modules/credentials.js");
 
 const getCartCount = async(req, res) => {
+    const {email} = req.query;
     try {
-        const cartCount = await CartItems.countDocuments();
+        const findEmail = await CartItems.findOne({email});
+        const cartCount = findEmail.items.length || 0;
         res.status(200).json({count: cartCount, message: `You have ${cartCount} Items`});
     }
     catch(err) {

@@ -33,19 +33,22 @@ function eachCat({cartCount, setCartCount}) {
     }
 
     const HandleAddto = async () => {
-      const className = 'Itemstoget'
-      const elements = document.querySelectorAll(`.${className}`);
-
-      const extractedEle = [];
-      elements.forEach(el => {
-        const tag = el.tagName.toLowerCase();
-        const content = tag === 'img' ? el.src : el.innerText;
-        extractedEle.push({tag, content});
-      })
-
+      
+      const email = localStorage.getItem("email");
+      const itemsToSend = {
+        email,
+        items: [
+          {
+            title,
+            image,
+            desc: description,
+            quantity: count,
+            price
+          }
+        ]
+      }
       try {
-        const response = await axios.post(`http://localhost:5000/data/items`, {items: extractedEle});
-        alert(response.data.message);
+        const response = await axios.post(`http://localhost:5000/data/items`, itemsToSend);
         navigate('/cart');
       }
       catch(err) {
@@ -55,8 +58,11 @@ function eachCat({cartCount, setCartCount}) {
     }
 
     const GetCartCount = async () => {
+      const email = localStorage.getItem("email");
       try {
-        const response = await axios.get(`http://localhost:5000/getCount`);
+        const response = await axios.get(`http://localhost:5000/getCount`,{
+          params: {email: email}
+        });
         setCartCount(() => response.data.count || 0);
       }
       catch(err) {

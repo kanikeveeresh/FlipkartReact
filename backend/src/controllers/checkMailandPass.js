@@ -28,7 +28,7 @@ const checkMailandPass = async (req, res) => {
         }
 
         const token = jwt.sign({email: user.email, id: user._id}, SECRET_KEY, {expiresIn: "1h"});
-        return res.status(200).json({message: "Email and Password verified successfully.", token});
+        return res.status(200).json({message: "Email and Password verified successfully.", token, email});
     }
     catch(err) {
         return res.status(500).json({message: "Server error"});

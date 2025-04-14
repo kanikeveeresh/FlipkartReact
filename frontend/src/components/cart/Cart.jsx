@@ -35,20 +35,19 @@ function Cart() {
 
   const fetchData = async() => {
     try{
-      const response = await axios.get(`http://localhost:5000/getItems`);
+      const email = localStorage.getItem("email");
+      const response = await axios.get(`http://localhost:5000/getItems`, {
+        params: { email: email }
+      });
       setCartItems(response.data);
 
       const initialQuantity = {};
-      response.data.forEach((doc) => {
-        doc.items.map((element, index) => {
-          if(element.tag.toLowerCase() === 'strong') {
-            const uniqueId = doc._id;
-            initialQuantity[uniqueId] = parseInt(element.content);
-          }
-        });
+      response.data.map((item) => {
+        initialQuantity[item._id] = item.quantity;
       });
 
       setQuantities(initialQuantity);
+      console.log(JSON.stringify(initialQuantity));
     }
     catch(err) {
       console.error("Error fetching data", err);
@@ -65,35 +64,27 @@ function Cart() {
       {cartItems.length > 0 ? (
         <div className='d-flex p-3 gap-3 cartBackGround mt-5'>
           <div className='cartItems p-3' style={{flexBasis:'65%'}}>
-            <div className='d-flex flex-column'>
-            {cartItems.map((doc, index) => (
-              <>
-              <div key={index} className='d-flex'>
-                {doc.items.map((element, index) => {
-                  const uniqueId = doc._id;
-                  if(element.tag.toLowerCase() === 'img') {
-                    return (<div key={uniqueId}>
-                      <img src={element.content} className='CartImg'/>
-                      <div className='d-flex justify-content-center align-items-center'><button className={`btn btn-${quantities[uniqueId] > 1 ? 'success' : 'danger'}`} onClick={() => HandleDec(uniqueId)}>-</button><span><strong>{quantities[uniqueId] || 1}</strong></span><button className={`btn btn-${quantities[uniqueId] == 10 ? 'danger' : 'success'}`} onClick={() => HandleInc(uniqueId)}>+</button></div>
-                      {msg[uniqueId] && <p className='text-danger text-center' style={{fontSize: '10px'}}>{msg[uniqueId]}</p>}
+            {cartItems.map((item, index) => {
+              const id = item._id;
+              return (
+                <div key={index} className='d-flex gap-3 mb-4 p-3 border rounded bg-light'>
+                  <div className='d-flex flex-column justify-content-center gap-3'>
+                    <img src={item.image} style={{width: "100px", height: "100px", objectFit: "contain"}}/>
+                    <div className='d-flex gap-2 justify-content-center'>
+                      <button className={`btn btn-${quantities[id] > 1 ? 'success' : 'danger'}`} onClick={() => HandleDec(id)}>-</button>
+                      <span><strong>{quantities[id] || 1}</strong></span>
+                      <button className={`btn btn-${quantities[id] === 10 ? 'danger' : 'success'}`} onClick={() => HandleInc(id)}>+</button>
                     </div>
-                    )
-                  }
-                  else {
-                    return (
-                      <div key={uniqueId} className='d-flex flex-column align-items-start'>
-                        {element.tag.toLowerCase() === 'h2' && <><h2>{element.content}</h2></>}
-                        {element.tag.toLowerCase() === 'p' && <p>{element.content}</p>}
-                        {element.tag.toLowerCase() === 'span' && <h4>₹{element.content}</h4>}
-                      </div>
-                    )
-                  }
-                })}
-              </div>
-              <hr ></hr>
-              </>
-            ))}
-            </div>
+                    {msg[id] && (<p className='text-danger text-center' style={{fontSize: "8px", whiteSpace: 'nowrap'}}>{msg[id]}</p>)}
+                  </div>
+                  <div>
+                    <p>{item.title}</p>
+                    <p>{item.desc}</p>
+                    <p>{item.price}</p>
+                  </div>
+                </div>
+              )
+            })}
           </div>
           <div className='position-relative' style={{flexBasis:'35%'}}>
             <div className='position-fixed cartItems top p-3'>
@@ -110,7 +101,18 @@ function Cart() {
             </div>
           </div>
         </div>
-      ) : <img src = 'https://rukminim2.flixcart.com/www/800/800/promos/16/05/2019/d438a32e-765a-4d8b-b4a6-520b560971e8.png?q=90' />}
+      ) : 
+        <div className='bg-light' style={{height: "100vh"}}>
+          <div style={{paddingTop: "50px"}}>
+            <div className='d-flex flex-column align-items-center justify-content-center m-4' style={{height: "60vh"}}>
+              <img src = 'https://rukminim2.flixcart.com/www/800/800/promos/16/05/2019/d438a32e-765a-4d8b-b4a6-520b560971e8.png?q=90' style={{width: "220px", height: "220px", objectFit:"contain"}}/>
+              <h5>Your cart is empty!</h5>
+              <p>Add items to it now.</p>
+              <button className='btn bg-primary'>Shop now</button>
+            </div>
+          </div>
+        </div>
+        }
     </>
   )
 }

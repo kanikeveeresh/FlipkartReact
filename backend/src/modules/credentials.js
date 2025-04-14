@@ -10,11 +10,14 @@ const userSchema = mongoose.Schema(
 const User = mongoose.model("User", userSchema);
 
 const itemsSchema = mongoose.Schema({
+    email: {type: String, required: true, unique: true},
     items: [
         {
-            tag: String,
-            content: String,
-            _id: false
+            title: String,
+            image: String,
+            desc: String,
+            quantity: Number,
+            price: Number,
         }
     ]
 },{timeStamps: true, collection: 'cartItems'});

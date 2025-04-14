@@ -2,23 +2,25 @@ const { CartItems } = require('../modules/credentials.js');
 
 const cartPostItems = async(req, res) => {
     try {
-        const { items } = req.body;
+        const { email, items } = req.body;
 
-        const eleCheck = items.map(el => el.content);
-        const exists = await CartItems.findOne({
-            items: {
-                $elemMatch: {
-                    tag: 'h2',
-                    content: {$in: eleCheck}
-                }
+        const existingEmail = await CartItems.findOne({email});
+
+        if(existingEmail) {
+            const existingItems = (existingEmail.items || []).map(item => item.title);
+            const newItems = items.some(item => existingItems.includes(item.title));
+
+            if(newItems) {
+                return res.status(200).json({message: "Items already exists in the cart!"});
             }
-        });
 
-        if(exists) {
-            return res.status(200).json({message: "Already Items are Exists"});
+            existingEmail.items = [...(existingEmail.items || []), ...items];
+            await existingEmail.save();
+            return res.status(200).json({message: "Items added successfully in the cart!"});
         }
-        const savedItems = await CartItems.create({ items });
-        res.status(200).json({message: "Content saved successfully", recievedData: savedItems});
+
+        const newCart = await CartItems.create({email, items});
+        res.status(200).json({message: "New cart created successfully!"});
     }
     catch(err) {
         console.error("Error sending data", err);
