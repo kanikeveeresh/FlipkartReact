@@ -10,7 +10,9 @@ function HomePage({cartCount, setCartCount}) {
   const GetCartCount = async () => {
     const email = localStorage.getItem("email");
     try {
-      const response = await axios.get(`https://flipkartreact.onrender.com/getCount`);
+      const response = await axios.get(`https://flipkartreact.onrender.com/getCount`, {
+        params: {email: email}
+      });
       setCartCount(() => response.data.count || 0);
     }
     catch(err) {
