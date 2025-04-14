@@ -13,7 +13,8 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: "https://flipkart-h44b.onrender.com",
+  credentials: true,
   methods: ["POST", "GET"]
 }));
 

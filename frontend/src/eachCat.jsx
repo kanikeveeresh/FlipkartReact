@@ -48,7 +48,12 @@ function eachCat({cartCount, setCartCount}) {
         ]
       }
       try {
+<<<<<<< HEAD
         const response = await axios.post(`http://localhost:5000/data/items`, itemsToSend);
+=======
+        const response = await axios.post(`https://flipkartreact.onrender.com/data/items`, {items: extractedEle});
+        alert(response.data.message);
+>>>>>>> b48357679e897fcbe7f10d014a2865d85203952a
         navigate('/cart');
       }
       catch(err) {
@@ -60,9 +65,13 @@ function eachCat({cartCount, setCartCount}) {
     const GetCartCount = async () => {
       const email = localStorage.getItem("email");
       try {
+<<<<<<< HEAD
         const response = await axios.get(`http://localhost:5000/getCount`,{
           params: {email: email}
         });
+=======
+        const response = await axios.get(`https://flipkartreact.onrender.com/getCount`);
+>>>>>>> b48357679e897fcbe7f10d014a2865d85203952a
         setCartCount(() => response.data.count || 0);
       }
       catch(err) {
