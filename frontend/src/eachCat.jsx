@@ -48,7 +48,7 @@ function eachCat({cartCount, setCartCount}) {
         ]
       }
       try {
-        const response = await axios.post(`http://localhost:5000/data/items`, itemsToSend);
+        const response = await axios.post(`https://flipkartreact.onrender.com/data/items`, itemsToSend);
         alert(response.data.message);
         navigate('/cart');
       }
@@ -61,7 +61,7 @@ function eachCat({cartCount, setCartCount}) {
     const GetCartCount = async () => {
       const email = localStorage.getItem("email");
       try {
-        const response = await axios.get(`http://localhost:5000/getCount`, {
+        const response = await axios.get(`https://flipkartreact.onrender.com/getCount`, {
           params: {email: email}
         });
         setCartCount(() => response.data.count || 0);

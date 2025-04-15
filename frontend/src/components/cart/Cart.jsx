@@ -36,7 +36,7 @@ function Cart() {
   const fetchData = async() => {
     try{
       const email = localStorage.getItem("email");
-      const response = await axios.get(`http://localhost:5000/getItems`, {
+      const response = await axios.get(`https://flipkartreact.onrender.com/getItems`, {
         params: {email: email}
       });
       setCartItems(response.data);
