@@ -29,7 +29,7 @@ function subCategory({cartCount, setCartCount}) {
     const GetCartCount = async () => {
         const email = localStorage.getItem("email");
         try {
-        const response = await axios.get(`https://flipkartreact.onrender.com/getCount`, {
+        const response = await axios.get(`http://localhost:5000/getCount`, {
             params: {email: email}
         });
         setCartCount(() => response.data.count || 0);
