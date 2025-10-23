@@ -4,7 +4,7 @@ const route = require("./routes/CartItemsRouter.js");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const express = require("express");
-
+const addressRouter = require("./routes/AddressRouter.js");
 
 dotenv.config();
 
@@ -13,9 +13,9 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors({
-  origin: "https://flipkart-h44b.onrender.com",
+  origin: process.env.FRONTEND_URL,
   credentials: true,
-  methods: ["POST", "GET"]
+  methods: ["POST", "GET", "DELETE", "PUT"]
 }));
 
 mongoose.connect(process.env.MONGO_URI, {
@@ -29,5 +29,6 @@ mongoose.connect(process.env.MONGO_URI, {
 
 app.use("/api/credentials", router);
 app.use("/", route);
+app.use("/api", addressRouter);
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));

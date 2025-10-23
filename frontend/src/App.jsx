@@ -1,5 +1,5 @@
 import './App.css'
-import {BrowserRouter, Routes, Route} from 'react-router-dom'
+import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom'
 import SignUp from './SignUp'
 import "tailwindcss";
 import Login from './LogIn'
@@ -9,6 +9,7 @@ import EachCat from './eachCat.jsx'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useState } from 'react';
 import Cart from './components/cart/Cart.jsx';
+import Checkout from './components/checkout/Checkout.jsx';
 
 function App() {
 
@@ -23,7 +24,10 @@ function App() {
           <Route path='/home' element={<HomePage cartCount={cartCount} setCartCount={setCartCount}/>} />
           <Route path='/home/:categoryName' element={<SubCategory cartCount={cartCount} setCartCount={setCartCount}/>} />
           <Route path='/home/:categoryName/:name' element={<EachCat cartCount={cartCount} setCartCount={setCartCount}/>} />
-          <Route path='/cart' element={<Cart />} />
+          <Route path='/cart' element={<Cart/>} />
+          <Route path='/checkout' element={<Checkout />} />
+
+          <Route path="*" element={<Navigate to="/home" replace />} />
         </Routes>
       </BrowserRouter>
     </>

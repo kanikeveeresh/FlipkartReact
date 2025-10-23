@@ -47,7 +47,7 @@ function SignUp() {
     
 
     try {
-      const res = await axios.post(`https://flipkartreact.onrender.com/api/credentials/checkEmail`, 
+      const res = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/credentials/checkEmail`, 
         {
           email,
         },
@@ -101,12 +101,12 @@ function SignUp() {
     const hashedPass = await bcrypt.hash(password, 10);
 
     if(password !== rePassword || password.trim() === '') {
-      setCreMsg("Passwords must match. or not empty.");
+      setCreMsg("Passwords must match and not empty.");
       return;
     }
 
     try {
-      const response = await axios.post(`https://flipkartreact.onrender.com/api/credentials/save`, {
+      const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/credentials/save`, {
         email,
         password: hashedPass,
       },

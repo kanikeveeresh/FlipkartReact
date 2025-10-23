@@ -31,7 +31,7 @@ function LogIn() {
         return setMessage("Password required.");
       }
         try {
-          const response = await axios.post(`https://flipkartreact.onrender.com/api/credentials/checkEmailandPass`, 
+          const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/credentials/checkEmailandPass`, 
             {
               email,
               password,

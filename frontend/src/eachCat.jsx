@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useParams, useLocation, useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import Head from './components/top/Head'
 import Footer from './components/Foot/footer'
 import axios from 'axios'
@@ -9,7 +9,6 @@ function eachCat({cartCount, setCartCount}) {
 
     const [count, setCount] = useState(1);
     const [msg, setMsg] = useState("");
-    const { categoryName, name } = useParams();
     const location = useLocation();
     const {title, description, image, price} = location.state || {};
     const navigate = useNavigate();
@@ -48,7 +47,7 @@ function eachCat({cartCount, setCartCount}) {
         ]
       }
       try {
-        const response = await axios.post(`https://flipkartreact.onrender.com/data/items`, itemsToSend);
+        const response = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/data/items`, itemsToSend);
         alert(response.data.message);
         navigate('/cart');
       }
@@ -61,7 +60,7 @@ function eachCat({cartCount, setCartCount}) {
     const GetCartCount = async () => {
       const email = localStorage.getItem("email");
       try {
-        const response = await axios.get(`https://flipkartreact.onrender.com/getCount`, {
+        const response = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/getCount`, {
           params: {email: email}
         });
         setCartCount(() => response.data.count || 0);

@@ -19,7 +19,7 @@ const cartPostItems = async(req, res) => {
             return res.status(200).json({message: "Items added successfully in the cart!"});
         }
 
-        const newCart = await CartItems.create({email, items});
+        await CartItems.create({email, items});
         res.status(200).json({message: "New cart created successfully!"});
     }
     catch(err) {

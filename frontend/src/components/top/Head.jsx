@@ -8,7 +8,10 @@ function Head({cartCount}) {
   return (
     <div className='d-flex bg-primary justify-content-between align-items-center px-5 fixed-top'>
       <h2 className='text-white'>Flipkart</h2>
-      <input type="text" placeholder='search for products' className='bg-white'/>
+      <div className="inputSearchContainer">
+        <input type="text" placeholder='search for products' className='searchInput'/>
+        <img className = "searchIcon" src="https://cdn-icons-png.flaticon.com/512/10629/10629681.png" />
+      </div>
       {cartCount !== undefined ?
         <div className='cart-container'>
           <img src={CartImg} className='cartImg cursor-pointer' alt="Cart" onClick={() => navigate('/cart')}/>
