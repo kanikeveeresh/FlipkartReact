@@ -162,7 +162,7 @@ function Checkout() {
         <CartSummary cartItems={cartItems} quantities={quantities}/>
       </div>
       <Footer />
-      {addressModel && <AddressDetails closeModel={() => setAddressModel(false)} editDetails={editDetails} />}
+      {addressModel && <AddressDetails fetchAddressDetails={fetchAddressDetails} closeModel={() => setAddressModel(false)} editDetails={editDetails} />}
       {deliverModel && <OrderSuccess closeModel={() =>setDeliverModel(false)} address={editDetails.address} city={editDetails.city} pincode={editDetails.pincode} state={editDetails.state} />}
     </>
   )

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import '../styles/frontendSt.css'
 import axios from 'axios';
 
-function AddressDetails({ closeModel, editDetails }) {
+function AddressDetails({ fetchAddressDetails, closeModel, editDetails }) {
     const { firstName, lastName, pincode, address, city, state, type } = editDetails;
     const [FirstName, setFirstName] = useState(firstName || "");
     const [LastName, setLastName] = useState(lastName || "");
@@ -43,6 +43,7 @@ function AddressDetails({ closeModel, editDetails }) {
 
                 alert("Adress updated successfully!");
                 closeModel();
+                fetchAddressDetails();
             }
             catch(err) {
                 console.log("Internal server error");
@@ -68,6 +69,7 @@ function AddressDetails({ closeModel, editDetails }) {
 
                 alert("Address added succesfully!");
                 closeModel();
+                fetchAddressDetails();
             }
             catch(err) {
                 console.log("Internal server error...", err);
